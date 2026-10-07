@@ -266,16 +266,17 @@ export default function PainelTelemetria() {
       </div>
 
 
-            {/* 3. LADO DIREITO: COUNTDOWN GIGANTE (MÁGICA DO OBJECT-CONTAIN APLICADA AQUI) */}
-      <div className="absolute top-[4vh] right-[2vw] md:right-[5vw] z-20 flex justify-end">
-        {/* A caixa agora é um quadrado perfeito (aspect-square) para a imagem nunca distorcer! */}
-        <div className="relative w-[38vw] max-w-[350px] aspect-square flex items-center justify-center">
-          {/* O object-contain garante que a imagem do PNG fique certinha sem esticar */}
+           {/* 3. LADO DIREITO: A BOLHA DA CONTAGEM */}
+      <div className="absolute top-[1vh] md:top-[1vh] right-[1vw] md:right-[2vw] z-20 flex justify-end">
+        
+        {/* Usando o aspect-square + object-contain para não esticar, mas com a largura da versão que você gostou */}
+        <div className="relative w-[36vw] md:w-[320px] aspect-square flex items-center justify-center">
+          
           <img src={bgCountdown} alt="" className="absolute inset-0 w-full h-full object-contain animate-logo-glow pointer-events-none opacity-90" />
           
-          {/* O texto fica centralizado dentro da caixa, seguro de qualquer corte */}
-          <div className="relative z-10 flex flex-col items-center justify-center pt-[5%] px-[10%] w-full">
-            <span className="text-petronas text-[clamp(6px,1.2vw,12px)] font-bold tracking-[0.2em] uppercase mb-1 md:mb-2">
+          {/* Voltamos o padding antigo e as fontes baseadas em vh (que não quebram linha) */}
+          <div className="absolute inset-0 flex flex-col items-center justify-center pt-[5%] px-[15%]">
+            <span className="text-petronas text-[clamp(5px,1.2vh,12px)] font-bold tracking-[0.2em] uppercase mb-1 md:mb-2">
               LIGHTS OUT EM:
             </span>
 
@@ -290,24 +291,25 @@ export default function PainelTelemetria() {
               ))}
             </div>
 
-            {/* Números usando VW para escalarem sempre perfeitos com a largura da caixa */}
+            {/* Números voltaram para VH para não "comer linha" na tela fina */}
             <div className="flex flex-col items-center leading-[0.9] font-sans font-black tracking-tighter drop-shadow-[0_0_15px_rgba(0,161,155,0.3)]">
-              <div className="text-white text-[clamp(20px,5vw,75px)]">
-                {timeLeft.days} <span className="text-petronas text-[clamp(10px,2.5vw,28px)] tracking-widest font-bold uppercase ml-0.5">
+              <div className="text-white text-[clamp(25px,5vh,65px)]">
+                {timeLeft.days} <span className="text-petronas text-[clamp(12px,2vh,22px)] tracking-widest font-bold uppercase ml-0.5">
                   {timeLeft.days === 1 ? 'DIA' : 'DIAS'}
                 </span>
               </div>
-              <div className="text-white text-[clamp(18px,4.5vw,54px)] mt-1 md:mt-3">
+              <div className="text-white text-[clamp(20px,4vh,45px)] mt-1.5 md:mt-3">
                 {String(timeLeft.hours).padStart(2, '0')}:{String(timeLeft.minutes).padStart(2, '0')}:{String(timeLeft.seconds).padStart(2, '0')}
               </div>
             </div>
 
-            <span className="text-gray-400 text-[clamp(4px,0.8vw,9px)] tracking-[0.3em] uppercase mt-3 md:mt-5 font-bold">
+            <span className="text-gray-400 text-[clamp(4px,0.8vh,8px)] tracking-[0.3em] uppercase mt-3 md:mt-5 font-bold">
               11.10.2026 • 18:30 BRT
             </span>
           </div>
         </div>
       </div>
+      
       
 
 
