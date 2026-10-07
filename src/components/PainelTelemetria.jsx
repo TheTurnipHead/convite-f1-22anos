@@ -1,8 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
+import emailjs from '@emailjs/browser'; // Importação do EmailJS adicionada
 
-// =========================================================================
-// IMPORTAÇÕES
-// =========================================================================
 import f1Logo from '../assets/f1-logo.png'; 
 import bgCountdown from '../assets/176320.png';  
 
@@ -26,9 +24,6 @@ export default function PainelTelemetria() {
   const bgMusicRef = useRef(null);     
   const motorAudioRef = useRef(null);
 
-  // =========================================================================
-  // MÚSICA AUTOMÁTICA AO CARREGAR A TELA
-  // =========================================================================
   useEffect(() => {
     if (bgMusicRef.current) {
       bgMusicRef.current.volume = 0.15; 
@@ -46,7 +41,6 @@ export default function PainelTelemetria() {
     }
   }, []);
 
-  // Lógica do Temporizador
   useEffect(() => {
     const targetDate = new Date('2026-10-11T18:30:00');
     const interval = setInterval(() => {
@@ -66,7 +60,6 @@ export default function PainelTelemetria() {
     return () => clearInterval(interval);
   }, []);
 
-  // Efeito Máquina de Escrever pro Rádio
   useEffect(() => {
     let timeout;
     if (radioActive) {
@@ -87,9 +80,6 @@ export default function PainelTelemetria() {
     return () => clearTimeout(timeout);
   }, [radioActive, currentRadioIndex]);
 
-  // =========================================================================
-  // CONTROLOS DE ÁUDIO
-  // =========================================================================
   const toggleBgMusic = () => {
     if (isMusicPlaying) {
       bgMusicRef.current.pause();
@@ -131,11 +121,28 @@ export default function PainelTelemetria() {
       motorAudioRef.current.currentTime = 0;
       motorAudioRef.current.play().catch(e => console.log("Áudio do motor não encontrado."));
     }
+
+    // ================================================================
+    // INTEGRAÇÃO EMAILJS: ENVIA O E-MAIL EM SILÊNCIO NO BACKGROUND
+    // ================================================================
+    const templateParams = {
+      message: "ENGINE START! Alguém acabou de confirmar presença no seu Grand Prix de 22 anos pelo convite online."
+    };
+
+    // Substitua as chaves abaixo pelas suas criadas no site do EmailJS
+    emailjs.send(
+      'service_6oafmol', 
+      'template_ye41g1m', 
+      templateParams, 
+      'y75VbP3yQ0PKJU1Wb'
+    ).then((response) => {
+       console.log('Confirmação enviada aos boxes!', response.status, response.text);
+    }).catch((err) => {
+       console.log('Falha na comunicação de rádio (erro no email)...', err);
+    });
   };
 
-  // Função disparada quando o som do motor TERMINA
   const handleMotorEnded = () => {
-    // A música volta a tocar de fundo!
     if (isMusicPlaying && bgMusicRef.current) {
       bgMusicRef.current.play().catch(e => console.log("Erro ao retomar música."));
     }
@@ -151,9 +158,7 @@ export default function PainelTelemetria() {
   return (
     <div className="w-full h-[100dvh] bg-[#050505] overflow-hidden relative font-mono select-none">
       
-      <div className="absolute top-2 left-2 text-gray-700 text-[10px] z-50 pointer-events-none">
-        [v22.0] AUDIO_FIXED
-      </div>
+      {/* TAG DE VERSÃO REMOVIDA DAQUI! */}
 
       <style>{`
         @keyframes waveform { 0%, 100% { height: 10%; } 50% { height: 100%; } }
@@ -198,7 +203,6 @@ export default function PainelTelemetria() {
       {/* ===================== ÁREA SUPERIOR ===================== */}
       {/* ========================================================= */}
 
-      {/* 1. LADO ESQUERDO: PAINEL TELEMETRIA */}
       <div className="absolute top-[4vh] left-[2vw] md:left-[4vw] z-20 flex flex-col w-[22vw] md:w-[220px] bg-[#0a0a0a]/80 backdrop-blur-md border border-gray-800 rounded-lg overflow-hidden shadow-[0_0_20px_rgba(0,161,155,0.15)]">
         
         <div className="flex flex-col bg-gradient-to-r from-[#111] to-gray-900 border-l-[3px] border-petronas py-3 px-2 md:py-5 md:px-3 gap-2">
