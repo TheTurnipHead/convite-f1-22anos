@@ -89,6 +89,7 @@ export default function VideoIntro({ onFinish }) {
         className="w-full h-full object-cover pointer-events-none"
         autoPlay
         playsInline
+        preload="auto"
         onEnded={onFinish}
       >
         <source src={videoF1} type="video/mp4" />
