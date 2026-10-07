@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+@theme {
+  --color-petronas: #00A19B;
+}
+
+body {
+  background-color: #000;
+  color: #fff;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
